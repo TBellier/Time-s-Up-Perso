@@ -1,12 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react'
 import { store } from '../store.js';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
     const globalState = useContext(store);
     const { state, dispatch } = globalState;
     const [dataTeam, setDataTeam] = useState(state.equipes);
-    let history = useHistory();
+    let history = useNavigate();
     
     const [error, setError] = useState(null);
 
@@ -33,7 +33,7 @@ function Home() {
 
             if (validData.length === dataTeam.length ) {
                 dispatch({type : 'ADD_TEAMS_NAME', payload : dataTeam});
-                history.push('/recap');
+                history('/recap');
                 setError(null)
             }
             else {

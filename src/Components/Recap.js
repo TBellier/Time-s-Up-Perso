@@ -1,28 +1,28 @@
 import React, {useState, useContext, useEffect} from 'react'
 import { store } from '../store.js';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Recap() {
     const globalState = useContext(store);
     const { state, dispatch } = globalState;
-    let history = useHistory();
+    let history = useNavigate();
     
     const [teamsInfo, setTeamsInfo] = useState(state.equipes)
     const [currentTeam, setCurrentTeam] = useState(state.currentPlayer === 1 ? state.equipes[0] : state.equipes[1])
 
     function handleClick() {
-        history.push('/jeu');
+        history('/jeu');
     }
 
     useEffect(() => {
         if(state.currentManche === 10) {
-            history.push('/win');
+            history('/win');
         }
     })
 
 
     if (state?.words.length < 1) {
-        history.push('/');  
+        history('/');  
     }
     return (
         <>
@@ -37,7 +37,7 @@ function Recap() {
             <tbody>
                 <tr className={state.currentManche === 0 ? 'bg-orange-300' : 'bg-purple-200' }>
                     <td className="py-3 px-2 border-box text-gray-800">Tout les mots</td>
-                    {teamsInfo.map((equipe, index) => equipe.points.manche0.length !== 0 ? <td key={index} key={index} className="py-3 px-2 border-box text-gray-800">{equipe.points.manche0.length}</td> : <td key={index} className="py-3 px-2 border-box text-gray-800">/</td>)}
+                    {teamsInfo.map((equipe, index) => equipe.points.manche0.length !== 0 ? <td key={index} className="py-3 px-2 border-box text-gray-800">{equipe.points.manche0.length}</td> : <td key={index} className="py-3 px-2 border-box text-gray-800">/</td>)}
                 </tr>
                 <tr className={state.currentManche === 1 ? 'bg-orange-300' : 'bg-purple-200' }>
                     <td className="py-3 px-2 border-box text-gray-800">Un seul mot</td>

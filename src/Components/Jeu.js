@@ -1,12 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react'
 import { store } from '../store.js';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Jeu() {
     const globalState = useContext(store);
     const { state, dispatch } = globalState;
     const { currentManche } = state;
-    let history = useHistory();
+    let history = useNavigate();
     
     const [seconds, setSeconds] = useState(30);
     const [mots, setMots] = useState(state.manches[currentManche].wordsTofinds); // tout les mots de la manche
@@ -27,13 +27,13 @@ function Jeu() {
                 dispatch({type : 'ADD_POINTS', payload : found});
                 dispatch({type : 'MAJ_WORD_LIST_MANCHE', payload : mots});
                 dispatch({type : 'CHANGE_CURRENT_TEAM'});
-                history.push('/recap');
+                history('/recap');
             }
     
             return () => clearInterval(interval);
         }
 
-        history.push('/');
+        history('/');
 
     })
 
