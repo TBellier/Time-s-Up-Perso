@@ -2973,130 +2973,7 @@ root.render(/*#__PURE__*/ (0, _reactDefault.default).createElement((0, _appDefau
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"./App":"2kQhy","react-dom/client":"lOjBx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"2kQhy":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$f00f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$f00f.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _storeJs = require("./store.js");
-var _reactRouterDom = require("react-router-dom");
-var _homeJs = require("./Components/Home.js");
-var _homeJsDefault = parcelHelpers.interopDefault(_homeJs);
-var _jeuJs = require("./Components/Jeu.js");
-var _jeuJsDefault = parcelHelpers.interopDefault(_jeuJs);
-var _winJs = require("./Components/Win.js");
-var _winJsDefault = parcelHelpers.interopDefault(_winJs);
-var _recapJs = require("./Components/Recap.js");
-var _recapJsDefault = parcelHelpers.interopDefault(_recapJs);
-function App() {
-    return /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _storeJs.StateProvider), {
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 12,
-            columnNumber: 9
-        },
-        __self: this
-    }, /*#__PURE__*/ (0, _reactDefault.default).createElement("div", {
-        className: "min-h-screen bg-gray-300 text-gray-900 font-sans flex justify-center items-center flex-col p-5 border-box",
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 13,
-            columnNumber: 9
-        },
-        __self: this
-    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.HashRouter), {
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 14,
-            columnNumber: 9
-        },
-        __self: this
-    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Routes), {
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 15,
-            columnNumber: 13
-        },
-        __self: this
-    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Route), {
-        path: "/jeu",
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 16,
-            columnNumber: 17
-        },
-        __self: this
-    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _jeuJsDefault.default), {
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 17,
-            columnNumber: 21
-        },
-        __self: this
-    })), /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Route), {
-        path: "/recap",
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 19,
-            columnNumber: 17
-        },
-        __self: this
-    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _recapJsDefault.default), {
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 20,
-            columnNumber: 21
-        },
-        __self: this
-    })), /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Route), {
-        path: "/win",
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 22,
-            columnNumber: 17
-        },
-        __self: this
-    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _winJsDefault.default), {
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 23,
-            columnNumber: 21
-        },
-        __self: this
-    })), /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Route), {
-        path: "/",
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 25,
-            columnNumber: 17
-        },
-        __self: this
-    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _homeJsDefault.default), {
-        __source: {
-            fileName: "src/App.js",
-            lineNumber: 26,
-            columnNumber: 21
-        },
-        __self: this
-    }))))));
-}
-_c = App;
-exports.default = App;
-var _c;
-$RefreshReg$(_c, "App");
-
-  $parcel$ReactRefreshHelpers$f00f.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react":"21dqq","./store.js":"d8qyu","react-router-dom":"9xmpe","./Components/Home.js":"5n7pz","./Components/Jeu.js":"5Wtr3","./Components/Win.js":"4zu5s","./Components/Recap.js":"4E2JB","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"21dqq":[function(require,module,exports) {
+},{"react":"21dqq","./App":"2kQhy","react-dom/client":"lOjBx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"21dqq":[function(require,module,exports) {
 "use strict";
 module.exports = require("a569817e6ea559f6");
 
@@ -4967,7 +4844,130 @@ module.exports = require("a569817e6ea559f6");
     /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
 })();
 
-},{}],"d8qyu":[function(require,module,exports) {
+},{}],"2kQhy":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f00f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f00f.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _storeJs = require("./store.js");
+var _reactRouterDom = require("react-router-dom");
+var _homeJs = require("./Components/Home.js");
+var _homeJsDefault = parcelHelpers.interopDefault(_homeJs);
+var _jeuJs = require("./Components/Jeu.js");
+var _jeuJsDefault = parcelHelpers.interopDefault(_jeuJs);
+var _winJs = require("./Components/Win.js");
+var _winJsDefault = parcelHelpers.interopDefault(_winJs);
+var _recapJs = require("./Components/Recap.js");
+var _recapJsDefault = parcelHelpers.interopDefault(_recapJs);
+function App() {
+    return /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _storeJs.StateProvider), {
+        __source: {
+            fileName: "src/App.js",
+            lineNumber: 12,
+            columnNumber: 9
+        },
+        __self: this
+    }, /*#__PURE__*/ (0, _reactDefault.default).createElement("div", {
+        className: "min-h-screen bg-gray-300 text-gray-900 font-sans flex justify-center items-center flex-col p-5 border-box",
+        __source: {
+            fileName: "src/App.js",
+            lineNumber: 13,
+            columnNumber: 9
+        },
+        __self: this
+    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.HashRouter), {
+        __source: {
+            fileName: "src/App.js",
+            lineNumber: 14,
+            columnNumber: 9
+        },
+        __self: this
+    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Routes), {
+        __source: {
+            fileName: "src/App.js",
+            lineNumber: 15,
+            columnNumber: 13
+        },
+        __self: this
+    }, /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Route), {
+        path: "/jeu",
+        element: /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _jeuJsDefault.default), {
+            __source: {
+                fileName: "src/App.js",
+                lineNumber: 16,
+                columnNumber: 45
+            }
+        }),
+        __source: {
+            fileName: "src/App.js",
+            lineNumber: 16,
+            columnNumber: 17
+        },
+        __self: this
+    }), /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Route), {
+        path: "/recap",
+        element: /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _recapJsDefault.default), {
+            __source: {
+                fileName: "src/App.js",
+                lineNumber: 17,
+                columnNumber: 47
+            }
+        }),
+        __source: {
+            fileName: "src/App.js",
+            lineNumber: 17,
+            columnNumber: 17
+        },
+        __self: this
+    }), /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Route), {
+        path: "/win",
+        element: /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _winJsDefault.default), {
+            __source: {
+                fileName: "src/App.js",
+                lineNumber: 18,
+                columnNumber: 45
+            }
+        }),
+        __source: {
+            fileName: "src/App.js",
+            lineNumber: 18,
+            columnNumber: 17
+        },
+        __self: this
+    }), /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactRouterDom.Route), {
+        path: "/",
+        element: /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _homeJsDefault.default), {
+            __source: {
+                fileName: "src/App.js",
+                lineNumber: 19,
+                columnNumber: 42
+            }
+        }),
+        __source: {
+            fileName: "src/App.js",
+            lineNumber: 19,
+            columnNumber: 17
+        },
+        __self: this
+    })))));
+}
+_c = App;
+exports.default = App;
+var _c;
+$RefreshReg$(_c, "App");
+
+  $parcel$ReactRefreshHelpers$f00f.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","./store.js":"d8qyu","react-router-dom":"9xmpe","./Components/Home.js":"5n7pz","./Components/Jeu.js":"5Wtr3","./Components/Win.js":"4zu5s","./Components/Recap.js":"4E2JB","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"d8qyu":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$1c7a = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
