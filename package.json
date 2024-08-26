@@ -13,6 +13,7 @@
     "tailwindcss": ">=1.4.1"
   },
   "scripts": {
+    "build": "parcel build --dist-dir dist --public-url .\\ src/index.html",
     "deploy": "parcel build --dist-dir dist --public-url .\\ src/index.html&&gh-pages -d dist",
     "start": "parcel src/index.html"
   },
