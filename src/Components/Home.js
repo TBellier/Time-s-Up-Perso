@@ -10,11 +10,6 @@ function Home() {
     
     const [error, setError] = useState(null);
 
-    useEffect( () => {
-        dispatch({type : 'ADD_WORDS'});
-    },[]);
-
-
     const handleChange = e => {
         
         const {value, name} = e.target;
@@ -45,6 +40,23 @@ function Home() {
         }
     }
 
+    const handleUpload = e => {
+        const [file] = document.getElementById('uploadList').files;
+        let customWords = [];
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.addEventListener(
+            "load",
+            () => {
+            customWords = reader.result.split(/\r?\n|\r|\n/g);
+            console.log(customWords);
+            dispatch({type : 'UPLOAD_WORDS', customWords : customWords});
+            dispatch({type : 'ADD_WORDS'});
+            },
+            false,
+        );
+    }
+
 
     return (
         <>
@@ -64,6 +76,10 @@ function Home() {
                 {error}
             </div>
             ): null}
+            <label className="flex flex-col w-full items-start mt-4" htmlFor="uploadList">
+                <span className="mb-4">Téléverser une liste de mots : </span>
+                <input className="shadow-sm w-full text-white text-lg bg-purple-600 hover:bg-purple-700 box-border p-4 pt-3 pb-3 rounded-lg" type="file" id="uploadList" accept='.txt' onChange={() => handleUpload(event)} required/>
+            </label>
 
             <button className="transition-all duration-200 text-white text-lg bg-purple-600 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8" type="submit">Jouer !</button>
         </form>

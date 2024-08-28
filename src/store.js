@@ -1,5 +1,4 @@
 import React, { useReducer, createContext } from 'react';
-import {words} from './words';
 
 const initialState = {
     words : [],
@@ -71,8 +70,8 @@ function chooseWords(ar, l) {
 const StateProvider = ({children}) => {
     const [state, dispatch] = useReducer((state, action) => {
 
-        const {type, payload} = action;
-        const {currentPlayer, currentManche, equipes, manches} = state;
+        const {type, payload, customWords} = action;
+        const {currentPlayer, currentManche, equipes, manches, words} = state;
 
         console.log(state);
         switch(type) {
@@ -84,10 +83,18 @@ const StateProvider = ({children}) => {
                     ...state,
                     equipes: payload
                 };
+            case 'UPLOAD_WORDS' :
+                return {
+                    ...state,
+                    words : customWords,
+                };
             case 'ADD_WORDS' :
+                console.log("did a thing")
+                console.log(words)
                 const wordsList = chooseWords(words, 20);
                 const wordsListToManche = state.manches.map( el => ({...el, wordsTofinds : wordsList}));
-                
+                console.log(wordsList)
+                console.log(wordsListToManche)
                 return {
                     ...state,
                     words : wordsList,
