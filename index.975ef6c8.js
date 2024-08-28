@@ -4980,8 +4980,8 @@ parcelHelpers.export(exports, "store", ()=>store);
 parcelHelpers.export(exports, "StateProvider", ()=>StateProvider);
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _words = require("./words");
 var _s = $RefreshSig$();
+//import {words} from './words'; //soon to be deprecated
 const initialState = {
     words: [],
     equipes: [
@@ -5041,8 +5041,8 @@ function chooseWords(ar, l) {
 const StateProvider = ({ children })=>{
     _s();
     const [state, dispatch] = (0, _react.useReducer)((state, action)=>{
-        const { type, payload } = action;
-        const { currentPlayer, currentManche, equipes, manches } = state;
+        const { type, payload, customWords } = action;
+        const { currentPlayer, currentManche, equipes, manches, words } = state;
         console.log(state);
         switch(type){
             case "RESTART_GAME":
@@ -5052,12 +5052,21 @@ const StateProvider = ({ children })=>{
                     ...state,
                     equipes: payload
                 };
+            case "UPLOAD_WORDS":
+                return {
+                    ...state,
+                    words: customWords
+                };
             case "ADD_WORDS":
-                const wordsList = chooseWords((0, _words.words), 20);
+                console.log("did a thing");
+                console.log(words);
+                const wordsList = chooseWords(words, 20);
                 const wordsListToManche = state.manches.map((el)=>({
                         ...el,
                         wordsTofinds: wordsList
                     }));
+                console.log(wordsList);
+                console.log(wordsListToManche);
                 return {
                     ...state,
                     words: wordsList,
@@ -5121,7 +5130,7 @@ const StateProvider = ({ children })=>{
         },
         __source: {
             fileName: "src/store.js",
-            lineNumber: 170,
+            lineNumber: 178,
             columnNumber: 12
         },
         __self: undefined
@@ -5137,95 +5146,7 @@ $RefreshReg$(_c, "StateProvider");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","./words":"gEDpQ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gEDpQ":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "words", ()=>words);
-const words = [
-    "Jean-Jacques Goldman",
-    "Omar Sy",
-    "Dany Boon",
-    "Kylian Mbapp\xe9",
-    "Thomas Pesquet",
-    "Zin\xe9dine Zidane",
-    "Michel Cymes",
-    "Jean Reno",
-    "Jean-Paul Belmondo",
-    "Soprano",
-    "Jean-Pierre Pernaut",
-    "Teddy Riner",
-    "Michel Sardou",
-    "Jean Dujardin",
-    "Antoine Griezmann",
-    "Sophie Marceau",
-    "Jean-Luc Reichmann",
-    "Laurent Gerra",
-    "Renaud",
-    "Fabrice Luchini",
-    "Francis Cabrel",
-    "Jamel Debbouze",
-    "Florence Foresti",
-    "Gad Elmaleh",
-    "G\xe9rard Jugnot",
-    "Mimie Mathy",
-    "Patrick Bruel",
-    "St\xe9phane Bern",
-    "N'Golo Kant\xe9",
-    "Florent Pagny",
-    "\xc9lise Lucet",
-    "Louane",
-    "Nagui",
-    "Alain Souchon",
-    "Didier Deschamps",
-    "Franck Dubosc",
-    "Val\xe9rie Lemercier",
-    "Muriel Robin",
-    "Myl\xe8ne Farmer",
-    "Josiane Balasko",
-    "Ingrid Chauvin",
-    "Karine Le Marchand",
-    "Nicolas Hulot",
-    "Kad Merad",
-    "Zazie",
-    "Nolwenn Leroy",
-    "Line Renaud",
-    "Hugo Lloris",
-    "Nicolas Canteloup",
-    "Paul Pogba",
-    "chien",
-    "chat",
-    "bonobo",
-    "pantere",
-    "gorille",
-    "Nicolas Sarkozy",
-    "Romain Bardet",
-    "Lans Amrstrong",
-    "Louis Armstrong",
-    "Neil Armstrong",
-    "Joe Dassin",
-    "T-rex",
-    "Louis XVI",
-    "Napol\xe9on",
-    "Hitler",
-    "\xc9mile Zola",
-    "Voltaire",
-    "L\xe9onard De vinci",
-    "Cycliste",
-    "Pianniste",
-    "Christophe Colomb",
-    "Jules C\xe9sar",
-    "Harry Potter",
-    "FBN",
-    "Drake",
-    "\xc9cureil",
-    "Licorne",
-    "Le panda du takenoko",
-    "Forest Gump",
-    "Bob l'\xe9ponge",
-    "Homer Simpson"
-];
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -34043,11 +33964,6 @@ function Home() {
     const [dataTeam, setDataTeam] = (0, _react.useState)(state.equipes);
     let history = (0, _reactRouterDom.useNavigate)();
     const [error, setError] = (0, _react.useState)(null);
-    (0, _react.useEffect)(()=>{
-        dispatch({
-            type: "ADD_WORDS"
-        });
-    }, []);
     const handleChange = (e)=>{
         const { value, name } = e.target;
         const newDataTeam = dataTeam.map((equipe)=>equipe.id === name ? {
@@ -34070,11 +33986,28 @@ function Home() {
             } else setError("veuillez remplir tous les champs");
         } else setError("veuillez remplir tous les champs");
     };
+    const handleUpload = (e)=>{
+        const [file] = document.getElementById("uploadList").files;
+        let customWords = [];
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.addEventListener("load", ()=>{
+            customWords = reader.result.split(/\r?\n|\r|\n/g);
+            console.log(customWords);
+            dispatch({
+                type: "UPLOAD_WORDS",
+                customWords: customWords
+            });
+            dispatch({
+                type: "ADD_WORDS"
+            });
+        }, false);
+    };
     return /*#__PURE__*/ (0, _reactDefault.default).createElement((0, _reactDefault.default).Fragment, null, /*#__PURE__*/ (0, _reactDefault.default).createElement("h1", {
         className: "text-4xl font-bold mb-8",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 51,
+            lineNumber: 63,
             columnNumber: 9
         },
         __self: this
@@ -34082,7 +34015,7 @@ function Home() {
         className: "text-purple-600",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 51,
+            lineNumber: 63,
             columnNumber: 63
         },
         __self: this
@@ -34091,7 +34024,7 @@ function Home() {
         onSubmit: ()=>handleSubmit(event),
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 52,
+            lineNumber: 64,
             columnNumber: 9
         },
         __self: this
@@ -34099,7 +34032,7 @@ function Home() {
         className: "text-lg mb-5",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 53,
+            lineNumber: 65,
             columnNumber: 13
         },
         __self: this
@@ -34108,7 +34041,7 @@ function Home() {
         htmlFor: "equipe1",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 54,
+            lineNumber: 66,
             columnNumber: 13
         },
         __self: this
@@ -34116,7 +34049,7 @@ function Home() {
         className: "mb-4",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 55,
+            lineNumber: 67,
             columnNumber: 17
         },
         __self: this
@@ -34129,7 +34062,7 @@ function Home() {
         required: true,
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 56,
+            lineNumber: 68,
             columnNumber: 17
         },
         __self: this
@@ -34138,7 +34071,7 @@ function Home() {
         htmlFor: "equipe2",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 58,
+            lineNumber: 70,
             columnNumber: 13
         },
         __self: this
@@ -34146,7 +34079,7 @@ function Home() {
         className: "mb-4",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 59,
+            lineNumber: 71,
             columnNumber: 17
         },
         __self: this
@@ -34159,7 +34092,7 @@ function Home() {
         required: true,
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 60,
+            lineNumber: 72,
             columnNumber: 17
         },
         __self: this
@@ -34167,22 +34100,52 @@ function Home() {
         className: "bg-red-500 p-4 text-white rounded-lg box-border w-full mt-4",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 63,
+            lineNumber: 75,
             columnNumber: 13
         },
         __self: this
-    }, error) : null, /*#__PURE__*/ (0, _reactDefault.default).createElement("button", {
+    }, error) : null, /*#__PURE__*/ (0, _reactDefault.default).createElement("label", {
+        className: "flex flex-col w-full items-start mt-4",
+        htmlFor: "uploadList",
+        __source: {
+            fileName: "src/Components/Home.js",
+            lineNumber: 79,
+            columnNumber: 13
+        },
+        __self: this
+    }, /*#__PURE__*/ (0, _reactDefault.default).createElement("span", {
+        className: "mb-4",
+        __source: {
+            fileName: "src/Components/Home.js",
+            lineNumber: 80,
+            columnNumber: 17
+        },
+        __self: this
+    }, "T\xe9l\xe9verser une liste de mots : "), /*#__PURE__*/ (0, _reactDefault.default).createElement("input", {
+        className: "shadow-sm w-full text-white text-lg bg-purple-600 hover:bg-purple-700 box-border p-4 pt-3 pb-3 rounded-lg",
+        type: "file",
+        id: "uploadList",
+        accept: ".txt",
+        onChange: ()=>handleUpload(event),
+        required: true,
+        __source: {
+            fileName: "src/Components/Home.js",
+            lineNumber: 81,
+            columnNumber: 17
+        },
+        __self: this
+    })), /*#__PURE__*/ (0, _reactDefault.default).createElement("button", {
         className: "transition-all duration-200 text-white text-lg bg-purple-600 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8",
         type: "submit",
         __source: {
             fileName: "src/Components/Home.js",
-            lineNumber: 68,
+            lineNumber: 84,
             columnNumber: 13
         },
         __self: this
     }, "Jouer !")));
 }
-_s(Home, "P+I0U1f7gS66DHO7BoYNHQjlwbk=", false, function() {
+_s(Home, "YjMldnGLppq/UXrT9M2K9V4eyNU=", false, function() {
     return [
         (0, _reactRouterDom.useNavigate)
     ];
