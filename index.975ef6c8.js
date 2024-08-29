@@ -4970,9 +4970,7 @@ const initialState = {
     words: [],
     options: {
         passeManche1: false,
-        passeManche2: true,
-        passeManche3: true,
-        deckSize: 20,
+        deckSize: 40,
         time: 30,
         lostPasse: 1
     },
@@ -5033,12 +5031,19 @@ function chooseWords(ar, l) {
 const StateProvider = ({ children })=>{
     _s();
     const [state, dispatch] = (0, _react.useReducer)((state, action)=>{
-        const { type, payload, customWords } = action;
+        const { type, payload, customWords, optionName, value } = action;
         const { currentPlayer, currentManche, equipes, manches, words, options } = state;
         console.log(state);
         switch(type){
             case "RESTART_GAME":
                 return initialState;
+            case "UPDATE_OPTION":
+                options[optionName] = value;
+                console.log(options);
+                return {
+                    ...state,
+                    options: options
+                };
             case "ADD_TEAMS_NAME":
                 return {
                     ...state,
@@ -5119,7 +5124,7 @@ const StateProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "src/store.js",
-        lineNumber: 181,
+        lineNumber: 185,
         columnNumber: 12
     }, undefined);
 };
@@ -34791,6 +34796,8 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _storeJs = require("../store.js");
+var _menuJs = require("./Menu.js");
+var _menuJsDefault = parcelHelpers.interopDefault(_menuJs);
 var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 function Home() {
@@ -34798,6 +34805,7 @@ function Home() {
     const globalState = (0, _react.useContext)((0, _storeJs.store));
     const { state, dispatch } = globalState;
     const [dataTeam, setDataTeam] = (0, _react.useState)(state.equipes);
+    const [popUpMenu, setPopUpMenu] = (0, _react.useState)(false);
     let history = (0, _reactRouterDom.useNavigate)();
     const [error, setError] = (0, _react.useState)(null);
     const handleChange = (e)=>{
@@ -34822,7 +34830,7 @@ function Home() {
             } else setError("veuillez remplir tous les champs");
         } else setError("veuillez remplir tous les champs");
     };
-    const handleUpload = (e)=>{
+    const handleUpload = ()=>{
         const [file] = document.getElementById("uploadList").files;
         let customWords = [];
         const reader = new FileReader();
@@ -34850,25 +34858,25 @@ function Home() {
                         children: "Time's Up !"
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 63,
+                        lineNumber: 65,
                         columnNumber: 76
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/Home.js",
-                lineNumber: 63,
+                lineNumber: 65,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
                 className: "flex justify-center items-center flex-col",
-                onSubmit: ()=>handleSubmit(event),
+                onSubmit: (event)=>handleSubmit(event),
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("legend", {
                         className: "text-lg mb-5",
                         children: "Tout d'abord, choisissez le nom des \xe9quipes qui vont s'affronter :"
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 65,
+                        lineNumber: 67,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34880,25 +34888,25 @@ function Home() {
                                 children: "\xc9quipe 1 :"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 67,
+                                lineNumber: 69,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                                 className: "shadow-sm w-full h-12 box-border p-4 rounded-lg",
-                                onChange: ()=>handleChange(event),
+                                onChange: (event)=>handleChange(event),
                                 type: "text",
                                 name: "equipe1",
                                 id: "equipe1",
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 68,
+                                lineNumber: 70,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 66,
+                        lineNumber: 68,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34910,25 +34918,25 @@ function Home() {
                                 children: "\xc9quipe 2 :"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 71,
+                                lineNumber: 73,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                                 className: "shadow-sm w-full h-12 box-border p-4 rounded-lg",
-                                onChange: ()=>handleChange(event),
+                                onChange: (event)=>handleChange(event),
                                 type: "text",
                                 name: "equipe2",
                                 id: "equipe2",
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 72,
+                                lineNumber: 74,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 70,
+                        lineNumber: 72,
                         columnNumber: 13
                     }, this),
                     error ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -34936,7 +34944,7 @@ function Home() {
                         children: error
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 75,
+                        lineNumber: 77,
                         columnNumber: 13
                     }, this) : null,
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34948,7 +34956,7 @@ function Home() {
                                 children: "T\xe9l\xe9verser une liste de mots : "
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 80,
+                                lineNumber: 82,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -34956,38 +34964,65 @@ function Home() {
                                 type: "file",
                                 id: "uploadList",
                                 accept: ".txt",
-                                onChange: ()=>handleUpload(event),
+                                onChange: ()=>handleUpload(),
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 81,
+                                lineNumber: 83,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 79,
+                        lineNumber: 81,
                         columnNumber: 13
                     }, this),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                        className: "transition-all duration-200 text-white text-lg bg-purple-600 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8",
-                        type: "submit",
-                        children: "Jouer !"
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        class: "flex w-full grid grid-cols-[40%_60%]",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                className: "transition-all duration-200 text-lg bg-white p-10 pt-3 pb-3 rounded-lg mt-8 mr-8",
+                                type: "button",
+                                onClick: ()=>setPopUpMenu(!popUpMenu),
+                                children: "Options"
+                            }, void 0, false, {
+                                fileName: "src/Components/Home.js",
+                                lineNumber: 86,
+                                columnNumber: 17
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                className: "transition-all duration-200 text-white text-lg bg-purple-600 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8 h-fit",
+                                type: "submit",
+                                children: "Jouer !"
+                            }, void 0, false, {
+                                fileName: "src/Components/Home.js",
+                                lineNumber: 87,
+                                columnNumber: 17
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Components/Home.js",
+                        lineNumber: 85,
+                        columnNumber: 13
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "flex w-full h-32 mt-8",
+                        children: popUpMenu && (0, _menuJsDefault.default)()
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 84,
+                        lineNumber: 89,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/Home.js",
-                lineNumber: 64,
+                lineNumber: 66,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true);
 }
-_s(Home, "YjMldnGLppq/UXrT9M2K9V4eyNU=", false, function() {
+_s(Home, "XfdfKTk4r28zKDtShqkUfo1RxBU=", false, function() {
     return [
         (0, _reactRouterDom.useNavigate)
     ];
@@ -35002,7 +35037,185 @@ $RefreshReg$(_c, "Home");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","../store.js":"d8qyu","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react/jsx-dev-runtime":"iTorj"}],"5Wtr3":[function(require,module,exports) {
+},{"react":"21dqq","../store.js":"d8qyu","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react/jsx-dev-runtime":"iTorj","./Menu.js":"fgYGA"}],"fgYGA":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$a521 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$a521.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _storeJs = require("../store.js");
+var _s = $RefreshSig$();
+function Menu() {
+    _s();
+    const globalState = (0, _react.useContext)((0, _storeJs.store));
+    const { state, dispatch } = globalState;
+    // const [options, setOptions] = useState(state.options);
+    const handleCheckBox = ()=>{
+        // Get the checkbox
+        let checkBox = document.getElementById("passeBox");
+        dispatch({
+            type: "UPDATE_OPTION",
+            optionName: "passeManche1",
+            value: checkBox.checked
+        });
+    };
+    const handleNumber = (type)=>{
+        let number = document.getElementById(type).value;
+        dispatch({
+            type: "UPDATE_OPTION",
+            optionName: type,
+            value: number
+        });
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ui", {
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                            type: "checkbox",
+                            id: "passeBox",
+                            name: "passe",
+                            onClick: ()=>handleCheckBox()
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 24,
+                            columnNumber: 17
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                            htmlFor: "passeBox",
+                            children: "Passer au premier tour"
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 25,
+                            columnNumber: 17
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/Components/Menu.js",
+                    lineNumber: 23,
+                    columnNumber: 13
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                            type: "number",
+                            id: "deckSize",
+                            name: "deck",
+                            onChange: ()=>handleNumber("deckSize"),
+                            min: 5,
+                            max: 100,
+                            value: state.options.deckSize,
+                            step: 1
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 28,
+                            columnNumber: 17
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                            htmlFor: "deckSize",
+                            children: "Nombre de cartes"
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 29,
+                            columnNumber: 17
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/Components/Menu.js",
+                    lineNumber: 27,
+                    columnNumber: 13
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                            type: "number",
+                            id: "time",
+                            name: "time",
+                            onChange: ()=>handleNumber("time"),
+                            min: 10,
+                            max: 120,
+                            value: state.options.time,
+                            step: 1
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 32,
+                            columnNumber: 17
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                            htmlFor: "passeBox",
+                            children: "Temps par tour (secondes)"
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 33,
+                            columnNumber: 17
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/Components/Menu.js",
+                    lineNumber: 31,
+                    columnNumber: 13
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                            type: "number",
+                            id: "lostPasse",
+                            name: "penalty",
+                            onChange: ()=>handleNumber("lostPasse"),
+                            min: 0,
+                            max: 10,
+                            value: state.options.lostPasse,
+                            step: 1
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 36,
+                            columnNumber: 17
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                            htmlFor: "passeBox",
+                            children: "P\xe9nalit\xe9 pour passer (secondes)"
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 37,
+                            columnNumber: 17
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/Components/Menu.js",
+                    lineNumber: 35,
+                    columnNumber: 13
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/Components/Menu.js",
+            lineNumber: 22,
+            columnNumber: 9
+        }, this)
+    }, void 0, false, {
+        fileName: "src/Components/Menu.js",
+        lineNumber: 21,
+        columnNumber: 5
+    }, this);
+}
+_s(Menu, "amC1/c9ldnJBSldn3lb055gydI4=");
+_c = Menu;
+exports.default = Menu;
+var _c;
+$RefreshReg$(_c, "Menu");
+
+  $parcel$ReactRefreshHelpers$a521.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../store.js":"d8qyu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"5Wtr3":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$27e7 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -35024,7 +35237,6 @@ function Jeu() {
     const { currentManche, options } = state;
     let history = (0, _reactRouterDom.useNavigate)();
     const [seconds, setSeconds] = (0, _react.useState)(options.time);
-    console.log(options);
     const [mots, setMots] = (0, _react.useState)(state.manches[currentManche].wordsTofinds); // tout les mots de la manche
     const [found, setFound] = (0, _react.useState)([]); // les mots trouvés par le joueur courrant
     const [currentWord, setCurrentWord] = (0, _react.useState)(mots ? mots[Math.floor(Math.random() * mots?.length)] : null);
@@ -35063,11 +35275,11 @@ function Jeu() {
                     ...prevFound,
                     currentWord
                 ]);
-            setMots(mots.filter((item)=>item !== currentWord));
+            let changeMots = mots.filter((item)=>item !== currentWord);
+            setMots(changeMots);
             setCurrentWord(()=>{
-                const changeWord = mots[Math.floor(Math.random() * mots.length)];
-                if (changeWord === currentWord) return mots[Math.floor(Math.random() * mots.length)];
-                else return changeWord;
+                const changeWord = changeMots[Math.floor(Math.random() * changeMots.length)];
+                return changeWord;
             });
         }
     }
@@ -35083,14 +35295,14 @@ function Jeu() {
                             children: seconds
                         }, void 0, false, {
                             fileName: "src/Components/Jeu.js",
-                            lineNumber: 76,
+                            lineNumber: 68,
                             columnNumber: 66
                         }, this),
                         " secondes"
                     ]
                 }, void 0, true, {
                     fileName: "src/Components/Jeu.js",
-                    lineNumber: 76,
+                    lineNumber: 68,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
@@ -35098,7 +35310,7 @@ function Jeu() {
                     children: currentWord
                 }, void 0, false, {
                     fileName: "src/Components/Jeu.js",
-                    lineNumber: 77,
+                    lineNumber: 69,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -35110,22 +35322,22 @@ function Jeu() {
                             children: "Trouv\xe9 !"
                         }, void 0, false, {
                             fileName: "src/Components/Jeu.js",
-                            lineNumber: 79,
+                            lineNumber: 71,
                             columnNumber: 17
                         }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        currentManche != 0 || options.passeManche1 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                             onClick: ()=>looseTime(),
                             className: "text-white text-2xl bg-red-600 hover:bg-red-800 px-6 py-3 rounded-lg",
                             children: "Je passe"
                         }, void 0, false, {
                             fileName: "src/Components/Jeu.js",
-                            lineNumber: 80,
-                            columnNumber: 17
-                        }, this)
+                            lineNumber: 72,
+                            columnNumber: 62
+                        }, this) : null
                     ]
                 }, void 0, true, {
                     fileName: "src/Components/Jeu.js",
-                    lineNumber: 78,
+                    lineNumber: 70,
                     columnNumber: 17
                 }, this)
             ]
@@ -35139,13 +35351,13 @@ function Jeu() {
                     children: "Revenir \xe0 l'accueil"
                 }, void 0, false, {
                     fileName: "src/Components/Jeu.js",
-                    lineNumber: 84,
+                    lineNumber: 76,
                     columnNumber: 79
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/Components/Jeu.js",
-            lineNumber: 84,
+            lineNumber: 76,
             columnNumber: 13
         }, this)
     }, void 0, false);
@@ -35252,11 +35464,14 @@ function Recap() {
     const [teamsInfo, setTeamsInfo] = (0, _react.useState)(state.equipes);
     const [currentTeam, setCurrentTeam] = (0, _react.useState)(state.currentPlayer === 1 ? state.equipes[0] : state.equipes[1]);
     function handleClick() {
-        history("/jeu");
-    }
-    (0, _react.useEffect)(()=>{
         if (state.currentManche === 10) history("/win");
-    });
+        else history("/jeu");
+    }
+    // useEffect(() => {
+    //     if(state.currentManche === 10) {
+    //         history('/win');
+    //     }
+    // })
     if (state?.words.length < 1) history("/");
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
@@ -35265,7 +35480,7 @@ function Recap() {
                 children: "Time's OP !"
             }, void 0, false, {
                 fileName: "src/Components/Recap.js",
-                lineNumber: 29,
+                lineNumber: 33,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("table", {
@@ -35279,7 +35494,7 @@ function Recap() {
                                     children: "Manche"
                                 }, void 0, false, {
                                     fileName: "src/Components/Recap.js",
-                                    lineNumber: 33,
+                                    lineNumber: 37,
                                     columnNumber: 21
                                 }, this),
                                 teamsInfo.map((equipe, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("th", {
@@ -35287,18 +35502,18 @@ function Recap() {
                                         children: equipe.nom
                                     }, index, false, {
                                         fileName: "src/Components/Recap.js",
-                                        lineNumber: 34,
+                                        lineNumber: 38,
                                         columnNumber: 55
                                     }, this))
                             ]
                         }, void 0, true, {
                             fileName: "src/Components/Recap.js",
-                            lineNumber: 32,
+                            lineNumber: 36,
                             columnNumber: 17
                         }, this)
                     }, void 0, false, {
                         fileName: "src/Components/Recap.js",
-                        lineNumber: 31,
+                        lineNumber: 35,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tbody", {
@@ -35311,7 +35526,7 @@ function Recap() {
                                         children: "Tout les mots"
                                     }, void 0, false, {
                                         fileName: "src/Components/Recap.js",
-                                        lineNumber: 39,
+                                        lineNumber: 43,
                                         columnNumber: 21
                                     }, this),
                                     teamsInfo.map((equipe, index)=>equipe.points.manche0.length !== 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
@@ -35319,20 +35534,20 @@ function Recap() {
                                             children: equipe.points.manche0.length
                                         }, index, false, {
                                             fileName: "src/Components/Recap.js",
-                                            lineNumber: 40,
+                                            lineNumber: 44,
                                             columnNumber: 92
                                         }, this) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
                                             className: "py-3 px-2 border-box text-gray-800",
                                             children: "/"
                                         }, index, false, {
                                             fileName: "src/Components/Recap.js",
-                                            lineNumber: 40,
+                                            lineNumber: 44,
                                             columnNumber: 193
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "src/Components/Recap.js",
-                                lineNumber: 38,
+                                lineNumber: 42,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
@@ -35343,44 +35558,12 @@ function Recap() {
                                         children: "Un seul mot"
                                     }, void 0, false, {
                                         fileName: "src/Components/Recap.js",
-                                        lineNumber: 43,
+                                        lineNumber: 47,
                                         columnNumber: 21
                                     }, this),
                                     teamsInfo.map((equipe, index)=>equipe.points.manche1.length ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
                                             className: "py-3 px-2 border-box text-gray-800 ",
                                             children: equipe.points.manche1.length
-                                        }, index, false, {
-                                            fileName: "src/Components/Recap.js",
-                                            lineNumber: 44,
-                                            columnNumber: 86
-                                        }, this) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
-                                            className: "py-3 px-2 border-box text-gray-800",
-                                            children: "/"
-                                        }, index, false, {
-                                            fileName: "src/Components/Recap.js",
-                                            lineNumber: 44,
-                                            columnNumber: 188
-                                        }, this))
-                                ]
-                            }, void 0, true, {
-                                fileName: "src/Components/Recap.js",
-                                lineNumber: 42,
-                                columnNumber: 17
-                            }, this),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
-                                className: state.currentManche === 2 ? "bg-orange-300" : "bg-purple-200",
-                                children: [
-                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
-                                        className: "py-3 px-2 border-box text-gray-800",
-                                        children: "Le mime"
-                                    }, void 0, false, {
-                                        fileName: "src/Components/Recap.js",
-                                        lineNumber: 47,
-                                        columnNumber: 21
-                                    }, this),
-                                    teamsInfo.map((equipe, index)=>equipe.points.manche2.length ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
-                                            className: "py-3 px-2 border-box text-gray-800 ",
-                                            children: equipe.points.manche2.length
                                         }, index, false, {
                                             fileName: "src/Components/Recap.js",
                                             lineNumber: 48,
@@ -35398,20 +35581,60 @@ function Recap() {
                                 fileName: "src/Components/Recap.js",
                                 lineNumber: 46,
                                 columnNumber: 17
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
+                                className: state.currentManche === 2 ? "bg-orange-300" : "bg-purple-200",
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                        className: "py-3 px-2 border-box text-gray-800",
+                                        children: "Le mime"
+                                    }, void 0, false, {
+                                        fileName: "src/Components/Recap.js",
+                                        lineNumber: 51,
+                                        columnNumber: 21
+                                    }, this),
+                                    teamsInfo.map((equipe, index)=>equipe.points.manche2.length ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                            className: "py-3 px-2 border-box text-gray-800 ",
+                                            children: equipe.points.manche2.length
+                                        }, index, false, {
+                                            fileName: "src/Components/Recap.js",
+                                            lineNumber: 52,
+                                            columnNumber: 86
+                                        }, this) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                            className: "py-3 px-2 border-box text-gray-800",
+                                            children: "/"
+                                        }, index, false, {
+                                            fileName: "src/Components/Recap.js",
+                                            lineNumber: 52,
+                                            columnNumber: 188
+                                        }, this))
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/Components/Recap.js",
+                                lineNumber: 50,
+                                columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Recap.js",
-                        lineNumber: 37,
+                        lineNumber: 41,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/Recap.js",
-                lineNumber: 30,
+                lineNumber: 34,
                 columnNumber: 9
             }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+            state.currentManche === 10 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                onClick: ()=>handleClick(),
+                className: "transition-all duration-200 text-white text-lg bg-purple-800 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8",
+                children: "Fin de la partie !"
+            }, void 0, false, {
+                fileName: "src/Components/Recap.js",
+                lineNumber: 58,
+                columnNumber: 10
+            }, this) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                 onClick: ()=>handleClick(),
                 className: "transition-all duration-200 text-white text-lg bg-purple-800 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8",
                 children: [
@@ -35421,13 +35644,13 @@ function Recap() {
                 ]
             }, void 0, true, {
                 fileName: "src/Components/Recap.js",
-                lineNumber: 53,
-                columnNumber: 9
+                lineNumber: 60,
+                columnNumber: 10
             }, this)
         ]
     }, void 0, true);
 }
-_s(Recap, "O+9d91Fiq1VOioh2TL2ovBJxogE=", false, function() {
+_s(Recap, "GDuqTLbMVsCi/CCVlPXdFxk5IO8=", false, function() {
     return [
         (0, _reactRouterDom.useNavigate)
     ];
