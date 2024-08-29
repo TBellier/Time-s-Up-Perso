@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 function Jeu() {
     const globalState = useContext(store);
     const { state, dispatch } = globalState;
-    const { currentManche } = state;
+    const { currentManche, options } = state;
     let history = useNavigate();
     
-    const [seconds, setSeconds] = useState(30);
+    const [seconds, setSeconds] = useState(options.time);
     const [mots, setMots] = useState(state.manches[currentManche].wordsTofinds); // tout les mots de la manche
 
     const [found, setFound] = useState([]); // les mots trouvés par le joueur courrant
@@ -41,7 +41,7 @@ function Jeu() {
         
         const newWord = mots[Math.floor(Math.random()*mots.length)];
 
-        setSeconds(seconds - 3);
+        setSeconds(seconds - options.lostPasse);
         
         if(newWord !== currentWord) {
             setCurrentWord(newWord);
@@ -52,18 +52,11 @@ function Jeu() {
 
         if (mots.length > 0) {  
             setFound( prevFound => [...prevFound, currentWord]);
-            
-            setMots(mots.filter( item => item !== currentWord));
-            
+            let changeMots = mots.filter( (item) => item !== currentWord);
+            setMots(changeMots)
             setCurrentWord(() => {
-                const changeWord = mots[Math.floor(Math.random()*mots.length)];
-
-                if (changeWord === currentWord) {
-                    return mots[Math.floor(Math.random()*mots.length)];
-                }
-                else {
-                    return changeWord
-                }
+                const changeWord = changeMots[Math.floor(Math.random()*changeMots.length)];
+                return changeWord
             })
         }
     }
@@ -75,8 +68,8 @@ function Jeu() {
                 <h1 className="text-4xl font-bold mb-5">Il reste <span className="text-purple-500">{seconds}</span> secondes</h1>
                 <strong className="text-6xl font-bold mb-10">{currentWord}</strong>
                 <div className="flex mt-5">
-                <button onClick={() => updateTable()} className="text-white  text-2xl bg-green-600 hover:bg-green-800 px-6 py-3 rounded-lg mr-10">Trouvé !</button>    
-                <button onClick={() => looseTime()} className="text-white text-2xl bg-red-600 hover:bg-red-800 px-6 py-3 rounded-lg">Je passe</button>    
+                <button onClick={() => updateTable()} className="text-white  text-2xl bg-green-600 hover:bg-green-800 px-6 py-3 rounded-lg mr-10">Trouvé !</button>
+                {currentManche!=0 || options.passeManche1 ? (<button onClick={() => looseTime()} className="text-white text-2xl bg-red-600 hover:bg-red-800 px-6 py-3 rounded-lg">Je passe</button>): null}    
             </div>
             </>
         ) : (

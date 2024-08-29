@@ -11,14 +11,18 @@ function Recap() {
     const [currentTeam, setCurrentTeam] = useState(state.currentPlayer === 1 ? state.equipes[0] : state.equipes[1])
 
     function handleClick() {
-        history('/jeu');
-    }
-
-    useEffect(() => {
         if(state.currentManche === 10) {
             history('/win');
+        } else {
+            history('/jeu');
         }
-    })
+    }
+
+    // useEffect(() => {
+    //     if(state.currentManche === 10) {
+    //         history('/win');
+    //     }
+    // })
 
 
     if (state?.words.length < 1) {
@@ -49,9 +53,13 @@ function Recap() {
                 </tr>
             </tbody>
         </table>
-
-        <button onClick={() => handleClick()} className="transition-all duration-200 text-white text-lg bg-purple-800 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8">c'est au tour de l'équipe {currentTeam.nom} !</button>
-    </>
+        {
+        state.currentManche === 10 ?
+        (<button onClick={() => handleClick()} className="transition-all duration-200 text-white text-lg bg-purple-800 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8">Fin de la partie !</button>)
+        :
+        (<button onClick={() => handleClick()} className="transition-all duration-200 text-white text-lg bg-purple-800 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8">c'est au tour de l'équipe {currentTeam.nom} !</button>)
+        }
+        </>
     )
 }
 

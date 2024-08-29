@@ -2,6 +2,12 @@ import React, { useReducer, createContext } from 'react';
 
 const initialState = {
     words : [],
+    options : {
+        passeManche1 : false,
+        deckSize : 40,
+        time : 30,
+        lostPasse : 1
+    },
     equipes : [
         {
             id: 'equipe1',
@@ -70,14 +76,20 @@ function chooseWords(ar, l) {
 const StateProvider = ({children}) => {
     const [state, dispatch] = useReducer((state, action) => {
 
-        const {type, payload, customWords} = action;
-        const {currentPlayer, currentManche, equipes, manches, words} = state;
+        const {type, payload, customWords, optionName, value} = action;
+        const {currentPlayer, currentManche, equipes, manches, words, options} = state;
 
         console.log(state);
         switch(type) {
             case 'RESTART_GAME' :
                 return initialState;
-
+            case 'UPDATE_OPTION' :
+                options[optionName] = value;
+                console.log(options)
+                return {
+                    ...state,
+                    options: options
+                };
             case 'ADD_TEAMS_NAME' :
                 return {
                     ...state,
@@ -89,12 +101,8 @@ const StateProvider = ({children}) => {
                     words : customWords,
                 };
             case 'ADD_WORDS' :
-                console.log("did a thing")
-                console.log(words)
-                const wordsList = chooseWords(words, 20);
+                const wordsList = chooseWords(words, options.deckSize);
                 const wordsListToManche = state.manches.map( el => ({...el, wordsTofinds : wordsList}));
-                console.log(wordsList)
-                console.log(wordsListToManche)
                 return {
                     ...state,
                     words : wordsList,
