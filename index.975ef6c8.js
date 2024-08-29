@@ -4972,9 +4972,9 @@ const initialState = {
         passeManche1: false,
         passeManche2: true,
         passeManche3: true,
-        deckSize: 5,
-        time: 5,
-        lostPasse: -5
+        deckSize: 20,
+        time: 30,
+        lostPasse: 1
     },
     equipes: [
         {
