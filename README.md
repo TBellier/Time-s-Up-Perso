@@ -2,8 +2,8 @@
 
 ## Authors
 
-Project forked from Robin Allezard <robinallezard@gmail.com>
-Heavily modified by Thomas Bellier <reillebsamoht@gmail.com>
+- Project forked from [Robin Allezard](<robinallezard@gmail.com>)
+- Heavily modified by [Thomas Bellier](<reillebsamoht@gmail.com>)
 
 ## GitHub Pages
 
