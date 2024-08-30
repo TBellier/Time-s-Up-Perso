@@ -58,15 +58,18 @@ const { Provider } = store; // permet de transmettre au children les données
 
 function chooseWords(ar, l) {
     let arrayWords = [];
-    
-    while(arrayWords.length < l) {
-        
-        let newWordToAdd = ar[Math.floor(Math.random()*ar.length)];
+    if(l >= ar.length) {
+        arrayWords = ar
+    } else {
+        while(arrayWords.length < l) {
+            
+            let newWordToAdd = ar[Math.floor(Math.random()*ar.length)];
 
-        const doublon = arrayWords.find(el => el === newWordToAdd);
+            const doublon = arrayWords.find(el => el === newWordToAdd);
 
-        if(typeof doublon === 'undefined') {
-            arrayWords = [...arrayWords, newWordToAdd]
+            if(typeof doublon === 'undefined') {
+                arrayWords = [...arrayWords, newWordToAdd]
+            }
         }
     }
     return arrayWords;

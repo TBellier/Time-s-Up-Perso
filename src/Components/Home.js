@@ -29,6 +29,7 @@ function Home() {
             const validData = dataTeam.filter(equipe => equipe.nom !== '');
 
             if (validData.length === dataTeam.length ) {
+                dispatch({type : 'ADD_WORDS'});
                 dispatch({type : 'ADD_TEAMS_NAME', payload : dataTeam});
                 history('/recap');
                 setError(null)
@@ -53,7 +54,6 @@ function Home() {
             customWords = reader.result.split(/\r?\n|\r|\n/g);
             console.log(customWords);
             dispatch({type : 'UPLOAD_WORDS', customWords : customWords});
-            dispatch({type : 'ADD_WORDS'});
             },
             false,
         );
@@ -82,7 +82,7 @@ function Home() {
                 <span className="mb-4">Téléverser une liste de mots : </span>
                 <input className="shadow-sm w-full text-white text-lg bg-purple-600 hover:bg-purple-700 box-border p-4 pt-3 pb-3 rounded-lg" type="file" id="uploadList" accept='.txt' onChange={() => handleUpload()} required/>
             </label>
-            <div class="flex w-full grid grid-cols-[40%_60%]">
+            <div className="flex w-full grid grid-cols-[40%_60%]">
                 <button className="transition-all duration-200 text-lg bg-white p-10 pt-3 pb-3 rounded-lg mt-8 mr-8" type="button" onClick={() => setPopUpMenu(!popUpMenu)}>Options</button>
                 <button className="transition-all duration-200 text-white text-lg bg-purple-600 hover:bg-purple-700 p-10 pt-3 pb-3 rounded-lg mt-8 h-fit" type="submit">Jouer !</button>
             </div>
