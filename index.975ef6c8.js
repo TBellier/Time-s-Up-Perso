@@ -34801,6 +34801,7 @@ var _menuJs = require("./Menu.js");
 var _menuJsDefault = parcelHelpers.interopDefault(_menuJs);
 var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
+const maxWords = 100;
 function Home() {
     _s();
     const globalState = (0, _react.useContext)((0, _storeJs.store));
@@ -34841,11 +34842,17 @@ function Home() {
         reader.readAsText(file);
         reader.addEventListener("load", ()=>{
             customWords = reader.result.split(/\r?\n|\r|\n/g);
+            if (customWords.length > maxWords) {
+                setError(`fichier de texte incorrect, ${customWords.length} mots d\xe9tect\xe9s`);
+                document.getElementById("uploadList").value = "";
+            } else {
+                customWords = customWords.filter((value)=>value.length > 1);
+                dispatch({
+                    type: "UPLOAD_WORDS",
+                    customWords: customWords
+                });
+            }
             console.log(customWords);
-            dispatch({
-                type: "UPLOAD_WORDS",
-                customWords: customWords
-            });
         }, false);
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
@@ -34859,13 +34866,13 @@ function Home() {
                         children: "Time's Up !"
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 65,
+                        lineNumber: 73,
                         columnNumber: 76
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/Home.js",
-                lineNumber: 65,
+                lineNumber: 73,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -34877,7 +34884,7 @@ function Home() {
                         children: "Tout d'abord, choisissez le nom des \xe9quipes qui vont s'affronter :"
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 67,
+                        lineNumber: 75,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34889,7 +34896,7 @@ function Home() {
                                 children: "\xc9quipe 1 :"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 69,
+                                lineNumber: 77,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -34901,13 +34908,13 @@ function Home() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 70,
+                                lineNumber: 78,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 68,
+                        lineNumber: 76,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34919,7 +34926,7 @@ function Home() {
                                 children: "\xc9quipe 2 :"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 73,
+                                lineNumber: 81,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -34931,13 +34938,13 @@ function Home() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 74,
+                                lineNumber: 82,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 72,
+                        lineNumber: 80,
                         columnNumber: 13
                     }, this),
                     error ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -34945,7 +34952,7 @@ function Home() {
                         children: error
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 77,
+                        lineNumber: 85,
                         columnNumber: 13
                     }, this) : null,
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34957,7 +34964,7 @@ function Home() {
                                 children: "T\xe9l\xe9verser une liste de mots : "
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 82,
+                                lineNumber: 90,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -34969,13 +34976,13 @@ function Home() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 83,
+                                lineNumber: 91,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 81,
+                        lineNumber: 89,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -34988,7 +34995,7 @@ function Home() {
                                 children: "Options"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 86,
+                                lineNumber: 94,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -34997,13 +35004,13 @@ function Home() {
                                 children: "Jouer !"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 87,
+                                lineNumber: 95,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 85,
+                        lineNumber: 93,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -35011,13 +35018,13 @@ function Home() {
                         children: popUpMenu && (0, _menuJsDefault.default)()
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 89,
+                        lineNumber: 97,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/Home.js",
-                lineNumber: 66,
+                lineNumber: 74,
                 columnNumber: 9
             }, this)
         ]
