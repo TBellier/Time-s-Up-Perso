@@ -1,7 +1,9 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
 import { store } from '../store.js';
 import Menu from './Menu.js';
 import { useNavigate } from "react-router-dom";
+
+const maxWords = 2000;
 
 function Home() {
     const globalState = useContext(store);
@@ -51,9 +53,15 @@ function Home() {
         reader.addEventListener(
             "load",
             () => {
-            customWords = reader.result.split(/\r?\n|\r|\n/g);
-            console.log(customWords);
-            dispatch({type : 'UPLOAD_WORDS', customWords : customWords});
+                customWords = reader.result.split(/\r?\n|\r|\n/g);
+                if(customWords.length > maxWords) {
+                    setError(`fichier de texte incorrect, ${customWords.length} mots détectés`)
+                    document.getElementById('uploadList').value = ''
+                } else {
+                    customWords = customWords.filter((value) => value.length > 1)
+                    dispatch({type : 'UPLOAD_WORDS', customWords : customWords});
+                }
+                console.log(customWords);
             },
             false,
         );
