@@ -5817,6 +5817,7 @@ var _s = $RefreshSig$();
 const initialState = {
     words: [],
     options: {
+        cycle: true,
         passeManche1: false,
         deckSize: 40,
         time: 30,
@@ -5864,9 +5865,27 @@ const initialState = {
 ;
 const store = /*#__PURE__*/ (0, _react.createContext)(initialState);
 const { Provider } = store; // permet de transmettre au children les données
+function shuffle(array) {
+    let currentIndex = array.length;
+    let newArray = [
+        ...array
+    ];
+    // While there remain elements to shuffle...
+    while(currentIndex != 0){
+        // Pick a remaining element...
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        // And swap it with the current element.
+        [newArray[currentIndex], newArray[randomIndex]] = [
+            newArray[randomIndex],
+            newArray[currentIndex]
+        ];
+    }
+    return newArray;
+}
 function chooseWords(ar, l) {
     let arrayWords = [];
-    if (l >= ar.length) arrayWords = ar;
+    if (l >= ar.length) arrayWords = shuffle(ar);
     else while(arrayWords.length < l){
         let newWordToAdd = ar[Math.floor(Math.random() * ar.length)];
         const doublon = arrayWords.find((el)=>el === newWordToAdd);
@@ -5905,7 +5924,7 @@ const StateProvider = ({ children })=>{
                 const wordsList = chooseWords(words, options.deckSize);
                 const wordsListToManche = state.manches.map((el)=>({
                         ...el,
-                        wordsTofinds: wordsList
+                        wordsTofinds: shuffle(wordsList)
                     }));
                 return {
                     ...state,
@@ -5971,7 +5990,7 @@ const StateProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "src/store.js",
-        lineNumber: 186,
+        lineNumber: 204,
         columnNumber: 12
     }, undefined);
 };
@@ -35062,12 +35081,12 @@ function Menu() {
     _s();
     const globalState = (0, _react.useContext)((0, _storeJs.store));
     const { state, dispatch } = globalState;
-    const handleCheckBox = ()=>{
+    const handleCheckBox = (type)=>{
         // Get the checkbox
-        let checkBox = document.getElementById("passeBox");
+        let checkBox = document.getElementById(type);
         dispatch({
             type: "UPDATE_OPTION",
-            optionName: "passeManche1",
+            optionName: type,
             value: checkBox.checked
         });
     };
@@ -35086,17 +35105,18 @@ function Menu() {
                     children: [
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                             type: "checkbox",
-                            id: "passeBox",
+                            id: "passeManche1",
                             name: "passe",
-                            onClick: ()=>handleCheckBox()
+                            checked: state.options.passeManche1,
+                            onClick: ()=>handleCheckBox("passeManche1")
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
                             lineNumber: 23,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                            htmlFor: "passeBox",
-                            children: "Passer au premier tour"
+                            htmlFor: "passeManche1",
+                            children: "Possible de passer au premier tour"
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
                             lineNumber: 24,
@@ -35111,22 +35131,19 @@ function Menu() {
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
                     children: [
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                            type: "number",
-                            id: "deckSize",
-                            name: "deck",
-                            onChange: ()=>handleNumber("deckSize"),
-                            min: 5,
-                            max: 100,
-                            value: state.options.deckSize,
-                            step: 1
+                            type: "checkbox",
+                            id: "cycle",
+                            name: "cycle",
+                            checked: state.options.cycle,
+                            onClick: ()=>handleCheckBox("cycle")
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
                             lineNumber: 27,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                            htmlFor: "deckSize",
-                            children: "Nombre de cartes"
+                            htmlFor: "cycle",
+                            children: "Cartes recycl\xe9es dans l'ordre"
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
                             lineNumber: 28,
@@ -35142,12 +35159,12 @@ function Menu() {
                     children: [
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                             type: "number",
-                            id: "time",
-                            name: "time",
-                            onChange: ()=>handleNumber("time"),
-                            min: 10,
-                            max: 120,
-                            value: state.options.time,
+                            id: "deckSize",
+                            name: "deck",
+                            onChange: ()=>handleNumber("deckSize"),
+                            min: 5,
+                            max: 100,
+                            value: state.options.deckSize,
                             step: 1
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
@@ -35155,8 +35172,8 @@ function Menu() {
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                            htmlFor: "passeBox",
-                            children: "Temps par tour (secondes)"
+                            htmlFor: "deckSize",
+                            children: "Nombre de cartes"
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
                             lineNumber: 32,
@@ -35172,12 +35189,12 @@ function Menu() {
                     children: [
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                             type: "number",
-                            id: "lostPasse",
-                            name: "penalty",
-                            onChange: ()=>handleNumber("lostPasse"),
-                            min: 0,
-                            max: 10,
-                            value: state.options.lostPasse,
+                            id: "time",
+                            name: "time",
+                            onChange: ()=>handleNumber("time"),
+                            min: 10,
+                            max: 120,
+                            value: state.options.time,
                             step: 1
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
@@ -35186,7 +35203,7 @@ function Menu() {
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
                             htmlFor: "passeBox",
-                            children: "P\xe9nalit\xe9 pour passer (secondes)"
+                            children: "Temps par tour (secondes)"
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
                             lineNumber: 36,
@@ -35196,6 +35213,36 @@ function Menu() {
                 }, void 0, true, {
                     fileName: "src/Components/Menu.js",
                     lineNumber: 34,
+                    columnNumber: 13
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                            type: "number",
+                            id: "lostPasse",
+                            name: "penalty",
+                            onChange: ()=>handleNumber("lostPasse"),
+                            min: 0,
+                            max: 10,
+                            value: state.options.lostPasse,
+                            step: 1
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 39,
+                            columnNumber: 17
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                            htmlFor: "passeBox",
+                            children: "P\xe9nalit\xe9 pour passer (secondes)"
+                        }, void 0, false, {
+                            fileName: "src/Components/Menu.js",
+                            lineNumber: 40,
+                            columnNumber: 17
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/Components/Menu.js",
+                    lineNumber: 38,
                     columnNumber: 13
                 }, this)
             ]
@@ -35258,7 +35305,7 @@ class Jeu extends (0, _reactDefault.default).Component {
         var intervalId = setInterval(this.timer, 1000);
         // store intervalId in the state so it can be accessed later:
         this.setState({
-            currentWord: this.state.mots ? this.state.mots[Math.floor(Math.random() * this.state.mots?.length)] : null,
+            currentWord: this.context.state.options.cycle ? this.state.mots[0] : this.state.mots[Math.floor(Math.random() * this.state.mots.length)],
             intervalId: intervalId
         }, ()=>{
             this.setState({
@@ -35271,6 +35318,7 @@ class Jeu extends (0, _reactDefault.default).Component {
         clearInterval(this.state.intervalId);
     }
     finish() {
+        if (this.state.mots.length > 0) this.state.mots.push(this.state.mots.shift());
         this.context.dispatch({
             type: "ADD_POINTS",
             payload: this.state.found
@@ -35299,7 +35347,10 @@ class Jeu extends (0, _reactDefault.default).Component {
     loseTime() {
         if (this.state.currentCount <= this.context.state.options.lostPasse) this.finish();
         else {
-            const newWord = this.state.mots[Math.floor(Math.random() * this.state.mots.length)];
+            var i = 0;
+            if (this.context.state.options.cycle) this.state.mots.push(this.state.mots.shift());
+            else i = Math.floor(Math.random() * this.state.mots.length);
+            const newWord = this.state.mots[i];
             if (newWord !== this.state.currentWord) this.setState({
                 currentWord: newWord
             });
@@ -35317,7 +35368,7 @@ class Jeu extends (0, _reactDefault.default).Component {
                     this.state.currentWord
                 ],
                 mots: changeMots,
-                currentWord: changeMots[Math.floor(Math.random() * changeMots.length)]
+                currentWord: this.context.state.options.cycle ? changeMots[0] : changeMots[Math.floor(Math.random() * changeMots.length)]
             }, ()=>{
                 this.checkTimer();
             });
@@ -35326,12 +35377,13 @@ class Jeu extends (0, _reactDefault.default).Component {
     render() {
         return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
             children: [
+                console.log(this.state.currentCount),
                 this.state.finished && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
                     to: "/recap",
                     replace: true
                 }, void 0, false, {
                     fileName: "src/Components/Jeu.js",
-                    lineNumber: 90,
+                    lineNumber: 98,
                     columnNumber: 38
                 }, this),
                 this.state.mots && this.state.currentWord ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
@@ -35345,14 +35397,14 @@ class Jeu extends (0, _reactDefault.default).Component {
                                     children: this.state.currentCount
                                 }, void 0, false, {
                                     fileName: "src/Components/Jeu.js",
-                                    lineNumber: 93,
+                                    lineNumber: 101,
                                     columnNumber: 70
                                 }, this),
                                 " secondes"
                             ]
                         }, void 0, true, {
                             fileName: "src/Components/Jeu.js",
-                            lineNumber: 93,
+                            lineNumber: 101,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
@@ -35360,7 +35412,7 @@ class Jeu extends (0, _reactDefault.default).Component {
                             children: this.state.currentWord
                         }, void 0, false, {
                             fileName: "src/Components/Jeu.js",
-                            lineNumber: 94,
+                            lineNumber: 102,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -35372,7 +35424,7 @@ class Jeu extends (0, _reactDefault.default).Component {
                                     children: "Trouv\xe9 !"
                                 }, void 0, false, {
                                     fileName: "src/Components/Jeu.js",
-                                    lineNumber: 96,
+                                    lineNumber: 104,
                                     columnNumber: 21
                                 }, this),
                                 this.context.state.currentManche != 0 || this.context.state.options.passeManche1 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -35381,13 +35433,13 @@ class Jeu extends (0, _reactDefault.default).Component {
                                     children: "Je passe"
                                 }, void 0, false, {
                                     fileName: "src/Components/Jeu.js",
-                                    lineNumber: 97,
+                                    lineNumber: 105,
                                     columnNumber: 104
                                 }, this) : null
                             ]
                         }, void 0, true, {
                             fileName: "src/Components/Jeu.js",
-                            lineNumber: 95,
+                            lineNumber: 103,
                             columnNumber: 21
                         }, this)
                     ]
@@ -35397,7 +35449,7 @@ class Jeu extends (0, _reactDefault.default).Component {
                         children: "Chargement..."
                     }, void 0, false, {
                         fileName: "src/Components/Jeu.js",
-                        lineNumber: 102,
+                        lineNumber: 110,
                         columnNumber: 21
                     }, this)
                 }, void 0, false)
