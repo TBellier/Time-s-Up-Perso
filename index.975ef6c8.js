@@ -5882,13 +5882,11 @@ const StateProvider = ({ children })=>{
     const [state, dispatch] = (0, _react.useReducer)((state, action)=>{
         const { type, payload, customWords, optionName, value } = action;
         const { currentPlayer, currentManche, equipes, manches, words, options } = state;
-        console.log(state);
         switch(type){
             case "RESTART_GAME":
                 return initialState;
             case "UPDATE_OPTION":
                 options[optionName] = value;
-                console.log(options);
                 return {
                     ...state,
                     options: options
@@ -5973,7 +5971,7 @@ const StateProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "src/store.js",
-        lineNumber: 188,
+        lineNumber: 186,
         columnNumber: 12
     }, undefined);
 };
@@ -34801,7 +34799,7 @@ var _menuJs = require("./Menu.js");
 var _menuJsDefault = parcelHelpers.interopDefault(_menuJs);
 var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
-const maxWords = 100;
+const maxWords = 2000;
 function Home() {
     _s();
     const globalState = (0, _react.useContext)((0, _storeJs.store));
@@ -34820,6 +34818,7 @@ function Home() {
     };
     const handleSubmit = (e)=>{
         e.preventDefault();
+        console.log(state);
         if (dataTeam !== null) {
             const validData = dataTeam.filter((equipe)=>equipe.nom !== "");
             if (validData.length === dataTeam.length) {
@@ -34866,13 +34865,13 @@ function Home() {
                         children: "Time's Up !"
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 73,
+                        lineNumber: 74,
                         columnNumber: 76
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/Home.js",
-                lineNumber: 73,
+                lineNumber: 74,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -34884,7 +34883,7 @@ function Home() {
                         children: "Tout d'abord, choisissez le nom des \xe9quipes qui vont s'affronter :"
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 75,
+                        lineNumber: 76,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34896,7 +34895,7 @@ function Home() {
                                 children: "\xc9quipe 1 :"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 77,
+                                lineNumber: 78,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -34908,13 +34907,13 @@ function Home() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 78,
+                                lineNumber: 79,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 76,
+                        lineNumber: 77,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34926,7 +34925,7 @@ function Home() {
                                 children: "\xc9quipe 2 :"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 81,
+                                lineNumber: 82,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -34938,13 +34937,13 @@ function Home() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 82,
+                                lineNumber: 83,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 80,
+                        lineNumber: 81,
                         columnNumber: 13
                     }, this),
                     error ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -34952,7 +34951,7 @@ function Home() {
                         children: error
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 85,
+                        lineNumber: 86,
                         columnNumber: 13
                     }, this) : null,
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -34964,7 +34963,7 @@ function Home() {
                                 children: "T\xe9l\xe9verser une liste de mots : "
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 90,
+                                lineNumber: 91,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -34976,13 +34975,13 @@ function Home() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 91,
+                                lineNumber: 92,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 89,
+                        lineNumber: 90,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -34995,7 +34994,7 @@ function Home() {
                                 children: "Options"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 94,
+                                lineNumber: 95,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -35004,13 +35003,13 @@ function Home() {
                                 children: "Jouer !"
                             }, void 0, false, {
                                 fileName: "src/Components/Home.js",
-                                lineNumber: 95,
+                                lineNumber: 96,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 93,
+                        lineNumber: 94,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -35018,13 +35017,13 @@ function Home() {
                         children: popUpMenu && (0, _menuJsDefault.default)()
                     }, void 0, false, {
                         fileName: "src/Components/Home.js",
-                        lineNumber: 97,
+                        lineNumber: 98,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/Home.js",
-                lineNumber: 74,
+                lineNumber: 75,
                 columnNumber: 9
             }, this)
         ]
@@ -35063,7 +35062,6 @@ function Menu() {
     _s();
     const globalState = (0, _react.useContext)((0, _storeJs.store));
     const { state, dispatch } = globalState;
-    // const [options, setOptions] = useState(state.options);
     const handleCheckBox = ()=>{
         // Get the checkbox
         let checkBox = document.getElementById("passeBox");
@@ -35093,7 +35091,7 @@ function Menu() {
                             onClick: ()=>handleCheckBox()
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
-                            lineNumber: 24,
+                            lineNumber: 23,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -35101,13 +35099,13 @@ function Menu() {
                             children: "Passer au premier tour"
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
-                            lineNumber: 25,
+                            lineNumber: 24,
                             columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/Components/Menu.js",
-                    lineNumber: 23,
+                    lineNumber: 22,
                     columnNumber: 13
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
@@ -35123,7 +35121,7 @@ function Menu() {
                             step: 1
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
-                            lineNumber: 28,
+                            lineNumber: 27,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -35131,13 +35129,13 @@ function Menu() {
                             children: "Nombre de cartes"
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
-                            lineNumber: 29,
+                            lineNumber: 28,
                             columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/Components/Menu.js",
-                    lineNumber: 27,
+                    lineNumber: 26,
                     columnNumber: 13
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
@@ -35153,7 +35151,7 @@ function Menu() {
                             step: 1
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
-                            lineNumber: 32,
+                            lineNumber: 31,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -35161,13 +35159,13 @@ function Menu() {
                             children: "Temps par tour (secondes)"
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
-                            lineNumber: 33,
+                            lineNumber: 32,
                             columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/Components/Menu.js",
-                    lineNumber: 31,
+                    lineNumber: 30,
                     columnNumber: 13
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
@@ -35183,7 +35181,7 @@ function Menu() {
                             step: 1
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
-                            lineNumber: 36,
+                            lineNumber: 35,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -35191,24 +35189,24 @@ function Menu() {
                             children: "P\xe9nalit\xe9 pour passer (secondes)"
                         }, void 0, false, {
                             fileName: "src/Components/Menu.js",
-                            lineNumber: 37,
+                            lineNumber: 36,
                             columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/Components/Menu.js",
-                    lineNumber: 35,
+                    lineNumber: 34,
                     columnNumber: 13
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/Components/Menu.js",
-            lineNumber: 22,
+            lineNumber: 21,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "src/Components/Menu.js",
-        lineNumber: 21,
+        lineNumber: 20,
         columnNumber: 5
     }, this);
 }
@@ -35237,155 +35235,184 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _storeJs = require("../store.js");
 var _reactRouterDom = require("react-router-dom");
-var _s = $RefreshSig$();
-function Jeu() {
-    _s();
-    const globalState = (0, _react.useContext)((0, _storeJs.store));
-    const { state, dispatch } = globalState;
-    const { currentManche, options } = state;
-    let history = (0, _reactRouterDom.useNavigate)();
-    const [seconds, setSeconds] = (0, _react.useState)(options.time);
-    const [mots, setMots] = (0, _react.useState)(state.manches[currentManche].wordsTofinds); // tout les mots de la manche
-    const [found, setFound] = (0, _react.useState)([]); // les mots trouvés par le joueur courrant
-    const [currentWord, setCurrentWord] = (0, _react.useState)(mots ? mots[Math.floor(Math.random() * mots?.length)] : null);
-    (0, _react.useEffect)(()=>{
-        if (mots) {
-            let interval = null;
-            if (seconds > 0 && mots.length !== 0) interval = setInterval(()=>{
-                setSeconds(seconds - 1);
-            }, 1000);
-            else {
-                dispatch({
-                    type: "ADD_POINTS",
-                    payload: found
-                });
-                dispatch({
-                    type: "MAJ_WORD_LIST_MANCHE",
-                    payload: mots
-                });
-                dispatch({
-                    type: "CHANGE_CURRENT_TEAM"
-                });
-                history("/recap");
-            }
-            return ()=>clearInterval(interval);
-        }
-        history("/");
-    });
-    function looseTime() {
-        const newWord = mots[Math.floor(Math.random() * mots.length)];
-        setSeconds(seconds - options.lostPasse);
-        if (newWord !== currentWord) setCurrentWord(newWord);
+class Jeu extends (0, _reactDefault.default).Component {
+    static contextType = (0, _storeJs.store);
+    constructor(){
+        super();
+        this.state = {
+            finished: false,
+            initialized: false,
+            found: []
+        };
+        this.timer = this.timer.bind(this);
     }
-    function updateTable() {
-        if (mots.length > 0) {
-            setFound((prevFound)=>[
-                    ...prevFound,
-                    currentWord
-                ]);
-            let changeMots = mots.filter((item)=>item !== currentWord);
-            setMots(changeMots);
-            setCurrentWord(()=>{
-                const changeWord = changeMots[Math.floor(Math.random() * changeMots.length)];
-                return changeWord;
+    componentDidMount() {
+        this.setState({
+            currentCount: this.context.state.options.time,
+            mots: this.context.state.manches[this.context.state.currentManche].wordsTofinds
+        }, ()=>{
+            this.startTimer();
+        });
+    }
+    startTimer() {
+        var intervalId = setInterval(this.timer, 1000);
+        // store intervalId in the state so it can be accessed later:
+        this.setState({
+            currentWord: this.state.mots ? this.state.mots[Math.floor(Math.random() * this.state.mots?.length)] : null,
+            intervalId: intervalId
+        }, ()=>{
+            this.setState({
+                initialized: true
+            });
+        });
+    }
+    componentWillUnmount() {
+        // use intervalId from the state to clear the interval
+        clearInterval(this.state.intervalId);
+    }
+    finish() {
+        this.context.dispatch({
+            type: "ADD_POINTS",
+            payload: this.state.found
+        });
+        this.context.dispatch({
+            type: "MAJ_WORD_LIST_MANCHE",
+            payload: this.state.mots
+        });
+        this.context.dispatch({
+            type: "CHANGE_CURRENT_TEAM"
+        });
+        this.setState({
+            finished: true
+        });
+    }
+    checkTimer() {
+        if (this.state.currentCount <= 0 || this.state.mots.length === 0) this.finish();
+    }
+    timer() {
+        this.setState({
+            currentCount: this.state.currentCount - 1
+        }, ()=>{
+            this.checkTimer();
+        });
+    }
+    loseTime() {
+        if (this.state.currentCount <= this.context.state.options.lostPasse) this.finish();
+        else {
+            const newWord = this.state.mots[Math.floor(Math.random() * this.state.mots.length)];
+            if (newWord !== this.state.currentWord) this.setState({
+                currentWord: newWord
+            });
+            this.setState({
+                currentCount: this.state.currentCount - this.context.state.options.lostPasse
             });
         }
     }
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: mots && currentWord ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+    updateTable() {
+        if (this.state.mots.length > 0) {
+            var changeMots = this.state.mots.filter((item)=>item !== this.state.currentWord);
+            this.setState({
+                found: [
+                    ...this.state.found,
+                    this.state.currentWord
+                ],
+                mots: changeMots,
+                currentWord: changeMots[Math.floor(Math.random() * changeMots.length)]
+            }, ()=>{
+                this.checkTimer();
+            });
+        } else this.finish();
+    }
+    render() {
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
             children: [
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                    className: "text-4xl font-bold mb-5",
-                    children: [
-                        "Il reste ",
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                            className: "text-purple-500",
-                            children: seconds
-                        }, void 0, false, {
-                            fileName: "src/Components/Jeu.js",
-                            lineNumber: 68,
-                            columnNumber: 66
-                        }, this),
-                        " secondes"
-                    ]
-                }, void 0, true, {
-                    fileName: "src/Components/Jeu.js",
-                    lineNumber: 68,
-                    columnNumber: 17
-                }, this),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
-                    className: "text-6xl font-bold mb-10",
-                    children: currentWord
+                this.state.finished && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
+                    to: "/recap",
+                    replace: true
                 }, void 0, false, {
                     fileName: "src/Components/Jeu.js",
-                    lineNumber: 69,
-                    columnNumber: 17
+                    lineNumber: 90,
+                    columnNumber: 38
                 }, this),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                    className: "flex mt-5",
+                this.state.mots && this.state.currentWord ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                     children: [
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                            onClick: ()=>updateTable(),
-                            className: "text-white  text-2xl bg-green-600 hover:bg-green-800 px-6 py-3 rounded-lg mr-10",
-                            children: "Trouv\xe9 !"
-                        }, void 0, false, {
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                            className: "text-4xl font-bold mb-5",
+                            children: [
+                                "Il reste ",
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    className: "text-purple-500",
+                                    children: this.state.currentCount
+                                }, void 0, false, {
+                                    fileName: "src/Components/Jeu.js",
+                                    lineNumber: 93,
+                                    columnNumber: 70
+                                }, this),
+                                " secondes"
+                            ]
+                        }, void 0, true, {
                             fileName: "src/Components/Jeu.js",
-                            lineNumber: 71,
-                            columnNumber: 17
+                            lineNumber: 93,
+                            columnNumber: 21
                         }, this),
-                        currentManche != 0 || options.passeManche1 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                            onClick: ()=>looseTime(),
-                            className: "text-white text-2xl bg-red-600 hover:bg-red-800 px-6 py-3 rounded-lg",
-                            children: "Je passe"
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
+                            className: "text-6xl font-bold mb-10",
+                            children: this.state.currentWord
                         }, void 0, false, {
                             fileName: "src/Components/Jeu.js",
-                            lineNumber: 72,
-                            columnNumber: 62
-                        }, this) : null
+                            lineNumber: 94,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                            className: "flex mt-5",
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                    onClick: ()=>this.updateTable(),
+                                    className: "text-white  text-2xl bg-green-600 hover:bg-green-800 px-6 py-3 rounded-lg mr-10",
+                                    children: "Trouv\xe9 !"
+                                }, void 0, false, {
+                                    fileName: "src/Components/Jeu.js",
+                                    lineNumber: 96,
+                                    columnNumber: 21
+                                }, this),
+                                this.context.state.currentManche != 0 || this.context.state.options.passeManche1 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                    onClick: ()=>this.loseTime(),
+                                    className: "text-white text-2xl bg-red-600 hover:bg-red-800 px-6 py-3 rounded-lg",
+                                    children: "Je passe"
+                                }, void 0, false, {
+                                    fileName: "src/Components/Jeu.js",
+                                    lineNumber: 97,
+                                    columnNumber: 104
+                                }, this) : null
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/Components/Jeu.js",
+                            lineNumber: 95,
+                            columnNumber: 21
+                        }, this)
                     ]
-                }, void 0, true, {
-                    fileName: "src/Components/Jeu.js",
-                    lineNumber: 70,
-                    columnNumber: 17
-                }, this)
+                }, void 0, true) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                        className: "text-4xl font-bold mb-5",
+                        children: "Chargement..."
+                    }, void 0, false, {
+                        fileName: "src/Components/Jeu.js",
+                        lineNumber: 102,
+                        columnNumber: 21
+                    }, this)
+                }, void 0, false)
             ]
-        }, void 0, true) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-            className: "text-4xl font-bold mb-5",
-            children: [
-                "une erreur s'est produite ",
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
-                    href: "/",
-                    className: "block bg-purple-600",
-                    children: "Revenir \xe0 l'accueil"
-                }, void 0, false, {
-                    fileName: "src/Components/Jeu.js",
-                    lineNumber: 76,
-                    columnNumber: 79
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "src/Components/Jeu.js",
-            lineNumber: 76,
-            columnNumber: 13
-        }, this)
-    }, void 0, false);
+        }, void 0, true);
+    }
 }
-_s(Jeu, "npVFPgV8nn5xfBLtbrVLe8Y8CpA=", false, function() {
-    return [
-        (0, _reactRouterDom.useNavigate)
-    ];
-});
-_c = Jeu;
 exports.default = Jeu;
-var _c;
-$RefreshReg$(_c, "Jeu");
 
   $parcel$ReactRefreshHelpers$27e7.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../store.js":"d8qyu","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"4zu5s":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../store.js":"d8qyu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"4zu5s":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$b173 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -35485,7 +35512,7 @@ function Recap() {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
                 className: "text-4xl font-bold mb-8 text-purple-600",
-                children: "Time's OP !"
+                children: "Time's Up !"
             }, void 0, false, {
                 fileName: "src/Components/Recap.js",
                 lineNumber: 33,
