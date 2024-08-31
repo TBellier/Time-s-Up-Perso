@@ -30,7 +30,7 @@ function Recap() {
     }
     return (
         <>
-        <h1 className="text-4xl font-bold mb-8 text-purple-600">Time's OP !</h1>
+        <h1 className="text-4xl font-bold mb-8 text-purple-600">Time's Up !</h1>
         <table className="table-auto  rounded-md overflow-hidden text-center shadow-base w-4/6">
             <thead>
                 <tr>

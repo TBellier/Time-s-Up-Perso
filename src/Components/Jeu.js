@@ -1,84 +1,111 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React from 'react'
 import { store } from '../store.js';
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-function Jeu() {
-    const globalState = useContext(store);
-    const { state, dispatch } = globalState;
-    const { currentManche, options } = state;
-    let history = useNavigate();
-    
-    const [seconds, setSeconds] = useState(options.time);
-    const [mots, setMots] = useState(state.manches[currentManche].wordsTofinds); // tout les mots de la manche
+class Jeu extends React.Component {
+    static contextType = store
 
-    const [found, setFound] = useState([]); // les mots trouvés par le joueur courrant
-    const [currentWord, setCurrentWord] = useState( mots ? mots[Math.floor(Math.random()*mots?.length)] : null);
-
-    useEffect(() => {
-        if(mots) {
-
-            let interval = null;
-            if(seconds > 0 && mots.length !== 0) {
-                interval = setInterval(() => {
-                    setSeconds(seconds - 1);
-                }, 1000);
-            }
-            else {
-                dispatch({type : 'ADD_POINTS', payload : found});
-                dispatch({type : 'MAJ_WORD_LIST_MANCHE', payload : mots});
-                dispatch({type : 'CHANGE_CURRENT_TEAM'});
-                history('/recap');
-            }
-    
-            return () => clearInterval(interval);
+    constructor() {
+        super();
+        this.state = {
+            finished: false,
+            initialized: false,
+            found: []
         }
+        this.timer=this.timer.bind(this);
+    }
 
-        history('/');
+    componentDidMount() {
+        this.setState({
+            currentCount: this.context.state.options.time,
+            mots: this.context.state.manches[this.context.state.currentManche].wordsTofinds
+        }, 
+            () => {this.startTimer()}
+        )
+    }
 
-    })
+    startTimer() {
+        var intervalId = setInterval(this.timer, 1000);
+        // store intervalId in the state so it can be accessed later:
+        this.setState({
+            currentWord: this.state.mots ? this.state.mots[Math.floor(Math.random()*this.state.mots?.length)] : null,
+            intervalId: intervalId,
+        },
+            () => {this.setState({initialized: true})}
+        )
+    }
 
-    function looseTime () {
-        
-        const newWord = mots[Math.floor(Math.random()*mots.length)];
+    componentWillUnmount() {
+        // use intervalId from the state to clear the interval
+        clearInterval(this.state.intervalId);
+    }
 
-        setSeconds(seconds - options.lostPasse);
-        
-        if(newWord !== currentWord) {
-            setCurrentWord(newWord);
+    finish() {
+        this.context.dispatch({type: 'ADD_POINTS', payload : this.state.found});
+        this.context.dispatch({type: 'MAJ_WORD_LIST_MANCHE', payload : this.state.mots});
+        this.context.dispatch({type: 'CHANGE_CURRENT_TEAM'});
+        this.setState({finished: true})
+    }
+
+    checkTimer() {
+        if(this.state.currentCount <= 0 || this.state.mots.length === 0) {
+            this.finish()
         }
     }
 
-    function updateTable() {
+    timer() {
+        this.setState({ currentCount: this.state.currentCount -1 }, () => {this.checkTimer()});
+    }
 
-        if (mots.length > 0) {  
-            setFound( prevFound => [...prevFound, currentWord]);
-            let changeMots = mots.filter( (item) => item !== currentWord);
-            setMots(changeMots)
-            setCurrentWord(() => {
-                const changeWord = changeMots[Math.floor(Math.random()*changeMots.length)];
-                return changeWord
-            })
+    loseTime() {
+        if(this.state.currentCount <= this.context.state.options.lostPasse){
+            this.finish()
+        } else {
+            const newWord = this.state.mots[Math.floor(Math.random()*this.state.mots.length)];
+            if(newWord !== this.state.currentWord) {
+                this.setState({currentWord: newWord});
+            }
+            this.setState({ currentCount: this.state.currentCount - this.context.state.options.lostPasse});
         }
     }
 
-    return (
-        <>
-            {mots && currentWord ? (
+    updateTable() {
+        if (this.state.mots.length > 0) {  
+            var changeMots = this.state.mots.filter( (item) => item !== this.state.currentWord);
+            this.setState({
+                found: [...this.state.found, this.state.currentWord],
+                mots: changeMots,
+                currentWord: changeMots[Math.floor(Math.random()*changeMots.length)]
+            },
+            () => {this.checkTimer()}
+            )
+        } else {
+            this.finish()
+        }
+    }
+
+    render() {
+        return (
             <>
-                <h1 className="text-4xl font-bold mb-5">Il reste <span className="text-purple-500">{seconds}</span> secondes</h1>
-                <strong className="text-6xl font-bold mb-10">{currentWord}</strong>
-                <div className="flex mt-5">
-                <button onClick={() => updateTable()} className="text-white  text-2xl bg-green-600 hover:bg-green-800 px-6 py-3 rounded-lg mr-10">Trouvé !</button>
-                {currentManche!=0 || options.passeManche1 ? (<button onClick={() => looseTime()} className="text-white text-2xl bg-red-600 hover:bg-red-800 px-6 py-3 rounded-lg">Je passe</button>): null}    
-            </div>
+            {this.state.finished && (<Navigate to="/recap" replace={true} />)}
+                {this.state.mots && this.state.currentWord ? (
+                <>
+                    <h1 className="text-4xl font-bold mb-5">Il reste <span className="text-purple-500">{this.state.currentCount}</span> secondes</h1>
+                    <strong className="text-6xl font-bold mb-10">{this.state.currentWord}</strong>
+                    <div className="flex mt-5">
+                    <button onClick={() => this.updateTable()} className="text-white  text-2xl bg-green-600 hover:bg-green-800 px-6 py-3 rounded-lg mr-10">Trouvé !</button>
+                    {this.context.state.currentManche!=0 || this.context.state.options.passeManche1 ? (<button onClick={() => this.loseTime()} className="text-white text-2xl bg-red-600 hover:bg-red-800 px-6 py-3 rounded-lg">Je passe</button>): null}    
+                </div>
+                </>
+            ) : (
+                <>
+                    <h1 className="text-4xl font-bold mb-5">Chargement...</h1>
+                    {/* <h1 className="text-4xl font-bold mb-5">une erreur s'est produite <a href="/" className="block bg-purple-600">Revenir à l'accueil</a></h1> */}
+                </>
+            )}
             </>
-        ) : (
-            <h1 className="text-4xl font-bold mb-5">une erreur s'est produite <a href="/" className="block bg-purple-600">Revenir à l'accueil</a></h1>
-        )}
-        </>
-
-
-    )
+        )
+    }
 }
 
 export default Jeu

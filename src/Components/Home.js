@@ -26,6 +26,7 @@ function Home() {
     
     const handleSubmit = e => {
         e.preventDefault();
+        console.log(state)
 
         if(dataTeam !== null) {
             const validData = dataTeam.filter(equipe => equipe.nom !== '');

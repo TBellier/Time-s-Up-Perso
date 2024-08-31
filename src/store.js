@@ -82,13 +82,11 @@ const StateProvider = ({children}) => {
         const {type, payload, customWords, optionName, value} = action;
         const {currentPlayer, currentManche, equipes, manches, words, options} = state;
 
-        console.log(state);
         switch(type) {
             case 'RESTART_GAME' :
                 return initialState;
             case 'UPDATE_OPTION' :
                 options[optionName] = value;
-                console.log(options)
                 return {
                     ...state,
                     options: options

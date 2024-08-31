@@ -4,7 +4,6 @@ import { store } from '../store.js';
 function Menu() {
     const globalState = useContext(store);
     const { state, dispatch } = globalState;
-    // const [options, setOptions] = useState(state.options);
 
     const handleCheckBox = () => {
         // Get the checkbox
