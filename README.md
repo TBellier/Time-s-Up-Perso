@@ -32,13 +32,14 @@ npm start
 ## TODO
 
 ### Functions
-- see, edit, and export word list
-- cookies to save previous states
-- pause
-- kill button
-- edit score
-- cycle
+- [ ] see, edit, and export word list
+- [ ] cookies to save previous states
+- [ ] pause
+- [ ] kill button
+- [ ] edit score
+- [x] cycle
+- [ ] sound when done
 
 ### Aspect
-- size menu correctly
-- revamp theme
+- [ ] size menu correctly
+- [ ] revamp theme

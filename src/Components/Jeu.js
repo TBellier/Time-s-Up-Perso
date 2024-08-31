@@ -28,7 +28,7 @@ class Jeu extends React.Component {
         var intervalId = setInterval(this.timer, 1000);
         // store intervalId in the state so it can be accessed later:
         this.setState({
-            currentWord: this.state.mots ? this.state.mots[Math.floor(Math.random()*this.state.mots?.length)] : null,
+            currentWord: this.context.state.options.cycle ? this.state.mots[0] : this.state.mots[Math.floor(Math.random()*this.state.mots.length)],
             intervalId: intervalId,
         },
             () => {this.setState({initialized: true})}
@@ -41,6 +41,7 @@ class Jeu extends React.Component {
     }
 
     finish() {
+        if(this.state.mots.length > 0) {this.state.mots.push(this.state.mots.shift())}
         this.context.dispatch({type: 'ADD_POINTS', payload : this.state.found});
         this.context.dispatch({type: 'MAJ_WORD_LIST_MANCHE', payload : this.state.mots});
         this.context.dispatch({type: 'CHANGE_CURRENT_TEAM'});
@@ -61,7 +62,13 @@ class Jeu extends React.Component {
         if(this.state.currentCount <= this.context.state.options.lostPasse){
             this.finish()
         } else {
-            const newWord = this.state.mots[Math.floor(Math.random()*this.state.mots.length)];
+            var i = 0;
+            if(this.context.state.options.cycle) {
+                this.state.mots.push(this.state.mots.shift())
+            } else {
+                i = Math.floor(Math.random()*this.state.mots.length);
+            }
+            const newWord = this.state.mots[i]
             if(newWord !== this.state.currentWord) {
                 this.setState({currentWord: newWord});
             }
@@ -75,7 +82,7 @@ class Jeu extends React.Component {
             this.setState({
                 found: [...this.state.found, this.state.currentWord],
                 mots: changeMots,
-                currentWord: changeMots[Math.floor(Math.random()*changeMots.length)]
+                currentWord: this.context.state.options.cycle ? changeMots[0] : changeMots[Math.floor(Math.random()*changeMots.length)]
             },
             () => {this.checkTimer()}
             )

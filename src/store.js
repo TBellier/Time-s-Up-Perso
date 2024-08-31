@@ -3,6 +3,7 @@ import React, { useReducer, createContext } from 'react';
 const initialState = {
     words : [],
     options : {
+        cycle : true, 
         passeManche1 : false,
         deckSize : 40,
         time : 30,
@@ -55,11 +56,28 @@ const store = createContext(initialState);
 
 const { Provider } = store; // permet de transmettre au children les données
 
+function shuffle(array) {
+    let currentIndex = array.length;
+    let newArray = [...array];
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [newArray[currentIndex], newArray[randomIndex]] = [
+        newArray[randomIndex], newArray[currentIndex]];
+    }
+    return newArray
+  }
 
 function chooseWords(ar, l) {
     let arrayWords = [];
     if(l >= ar.length) {
-        arrayWords = ar
+        arrayWords = shuffle(ar)
     } else {
         while(arrayWords.length < l) {
             
@@ -103,7 +121,7 @@ const StateProvider = ({children}) => {
                 };
             case 'ADD_WORDS' :
                 const wordsList = chooseWords(words, options.deckSize);
-                const wordsListToManche = state.manches.map( el => ({...el, wordsTofinds : wordsList}));
+                const wordsListToManche = state.manches.map( el => ({...el, wordsTofinds : shuffle(wordsList)}));
                 return {
                     ...state,
                     words : wordsList,
