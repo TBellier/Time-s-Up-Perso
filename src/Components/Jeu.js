@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
 import { store } from '../store.js';
 import { Navigate } from "react-router-dom";
+import buzzer from "../../ressources/buzzer.mp3";
+import win from "../../ressources/win.mp3";
 
 class Jeu extends React.Component {
     static contextType = store
@@ -12,6 +14,8 @@ class Jeu extends React.Component {
             initialized: false,
             found: []
         }
+        this.buzzer = new Audio(buzzer)
+        this.win = new Audio(win)
         this.timer=this.timer.bind(this);
     }
 
@@ -50,6 +54,12 @@ class Jeu extends React.Component {
 
     checkTimer() {
         if(this.state.currentCount <= 0 || this.state.mots.length === 0) {
+            if(this.context.state.options.sound && this.state.currentCount <= 0) {
+                this.buzzer.play()
+            }
+            if(this.context.state.options.sound && this.state.mots.length === 0) {
+                this.win.play()
+            }
             this.finish()
         }
     }
@@ -60,6 +70,9 @@ class Jeu extends React.Component {
 
     loseTime() {
         if(this.state.currentCount <= this.context.state.options.lostPasse){
+            if(this.context.state.options.sound) {
+                this.buzzer.play()
+            }
             this.finish()
         } else {
             var i = 0;
@@ -97,7 +110,7 @@ class Jeu extends React.Component {
             {this.state.finished && (<Navigate to="/recap" replace={true} />)}
                 {this.state.mots && this.state.currentWord ? (
                 <>
-                    <h1 className="text-4xl font-bold mb-5">Il reste <span className="text-purple-500">{this.state.currentCount}</span> secondes</h1>
+                    <h1 className="text-4xl font-bold mb-5">Il reste <span className="text-purple-500">{this.state.currentCount}</span> seconde{this.state.currentCount > 1 ? 's' : ''}</h1>
                     <strong className="text-6xl font-bold mb-10">{this.state.currentWord}</strong>
                     <div className="flex mt-5">
                     <button onClick={() => this.updateTable()} className="text-white  text-2xl bg-green-600 hover:bg-green-800 px-6 py-3 rounded-lg mr-10">Trouvé !</button>

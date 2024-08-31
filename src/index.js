@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import App from './App';
 import { createRoot } from 'react-dom/client';
 const container = document.getElementById('App');

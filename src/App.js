@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { StateProvider } from './store.js';
 import { HashRouter as Router, Routes, Route} from "react-router-dom";
 import Home from './Components/Home.js';

@@ -38,7 +38,7 @@ npm start
 - [ ] kill button
 - [ ] edit score
 - [x] cycle
-- [ ] sound when done
+- [ ] sound instant
 
 ### Aspect
 - [ ] size menu correctly

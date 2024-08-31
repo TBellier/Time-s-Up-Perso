@@ -3,7 +3,8 @@ import React, { useReducer, createContext } from 'react';
 const initialState = {
     words : [],
     options : {
-        cycle : true, 
+        cycle : true,
+        sound : true,
         passeManche1 : false,
         deckSize : 40,
         time : 30,

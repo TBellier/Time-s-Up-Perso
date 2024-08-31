@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext} from 'react';
 import { store } from '../store.js';
 
 function Menu() {
@@ -19,6 +19,10 @@ function Menu() {
     return (
     <div>
         <ui>
+            <li>
+                <input type="checkbox" id='sound' name='sound' checked={state.options.sound} onClick={() => handleCheckBox('sound')}/>
+                <label htmlFor="sound">Son à l'expiration du temps</label>
+            </li>
             <li>
                 <input type="checkbox" id='passeManche1' name='passe' checked={state.options.passeManche1} onClick={() => handleCheckBox('passeManche1')}/>
                 <label htmlFor="passeManche1">Possible de passer au premier tour</label>
