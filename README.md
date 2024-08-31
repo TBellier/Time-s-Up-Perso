@@ -28,3 +28,17 @@ npm install
 npm start
 ```
   Navigate to `http://localhost:1234`
+
+## TODO
+
+### Functions
+- see, edit, and export word list
+- cookies to save previous states
+- pause
+- kill button
+- edit score
+- cycle
+
+### Aspect
+- size menu correctly
+- revamp theme
