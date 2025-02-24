@@ -61,7 +61,7 @@ function Home() {
                     document.getElementById('uploadList').value = ''
                 } else {
                     customWords = customWords.filter((value) => value.length > 1)
-                    finalWords = [];
+                    var finalWords = [];
                     for (const w of customWords) {
                         a = new Word(w);
                         finalWords.push(a);
