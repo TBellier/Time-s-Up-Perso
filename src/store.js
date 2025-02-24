@@ -77,19 +77,9 @@ function shuffle(array) {
 
 function chooseWords(ar, l) {
     let arrayWords = [];
-    if(l >= ar.length) {
-        arrayWords = shuffle(ar)
-    } else {
-        while(arrayWords.length < l) {
-            
-            let newWordToAdd = ar[Math.floor(Math.random()*ar.length)];
-
-            const doublon = arrayWords.find(el => el === newWordToAdd);
-
-            if(typeof doublon === 'undefined') {
-                arrayWords = [...arrayWords, newWordToAdd]
-            }
-        }
+    arrayWords = shuffle(ar)
+    if(l < ar.length) {
+        arrayWords = arrayWords.slice(0, l)
     }
     return arrayWords;
 }

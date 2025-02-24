@@ -30,6 +30,7 @@ function Recap() {
     }
     return (
         <>
+        {console.debug(state)}
         <h1 className="text-4xl font-bold mb-8 text-purple-600">Time's Up !</h1>
         <table className="table-auto  rounded-md overflow-hidden text-center shadow-base w-4/6">
             <thead>

@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
 import { store } from '../store.js';
+import { Word, uniqBy } from '../word.js';
 import Menu from './Menu.js';
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +27,7 @@ function Home() {
     
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(state)
+        console.debug(state)
 
         if(dataTeam !== null) {
             const validData = dataTeam.filter(equipe => equipe.nom !== '');
@@ -60,9 +61,15 @@ function Home() {
                     document.getElementById('uploadList').value = ''
                 } else {
                     customWords = customWords.filter((value) => value.length > 1)
-                    dispatch({type : 'UPLOAD_WORDS', customWords : customWords});
+                    finalWords = [];
+                    for (const w of customWords) {
+                        a = new Word(w);
+                        finalWords.push(a);
+                    }
+                    finalWords = uniqBy(finalWords)
+                    dispatch({type : 'UPLOAD_WORDS', customWords : finalWords});
                 }
-                console.log(customWords);
+                console.log(finalWords);
             },
             false,
         );

@@ -111,7 +111,7 @@ class Jeu extends React.Component {
                 {this.state.mots && this.state.currentWord ? (
                 <>
                     <h1 className="text-4xl font-bold mb-5">Il reste <span className="text-purple-500">{this.state.currentCount}</span> seconde{this.state.currentCount > 1 ? 's' : ''}</h1>
-                    <strong className="text-6xl font-bold mb-10">{this.state.currentWord}</strong>
+                    <strong className="text-6xl font-bold mb-10">{this.state.currentWord.toString()}</strong>
                     <div className="flex mt-5">
                     <button onClick={() => this.updateTable()} className="text-white  text-2xl bg-green-600 hover:bg-green-800 px-6 py-3 rounded-lg mr-10">Trouvé !</button>
                     {this.context.state.currentManche!=0 || this.context.state.options.passeManche1 ? (<button onClick={() => this.loseTime()} className="text-white text-2xl bg-red-600 hover:bg-red-800 px-6 py-3 rounded-lg">Je passe</button>): null}    
