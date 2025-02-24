@@ -63,7 +63,7 @@ function Home() {
                     customWords = customWords.filter((value) => value.length > 1)
                     var finalWords = [];
                     for (const w of customWords) {
-                        a = new Word(w);
+                        let a = new Word(w);
                         finalWords.push(a);
                     }
                     finalWords = uniqBy(finalWords)
